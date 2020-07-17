@@ -28,7 +28,6 @@ public class DomainListItem : NSManagedObject, Identifiable{
 }
 
 extension DomainListItem{
-    
     static func getAllDomains() -> NSFetchRequest<DomainListItem> {
         let request: NSFetchRequest<DomainListItem> = DomainListItem.fetchRequest() as! NSFetchRequest<DomainListItem>
         let sortDescriptor = NSSortDescriptor(key: "dn", ascending: true)
