@@ -10,33 +10,46 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selection = 0
- 
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
+        
         TabView(selection: $selection){
-            Text("First View")
+            SearchView()
                 .font(.title)
                 .tabItem {
                     VStack {
-                        Image("first")
-                        Text("First")
+                        Image("search")
+                        Text("Search")
                     }
                 }
                 .tag(0)
-            Text("Second View")
+            FavListView()
                 .font(.title)
                 .tabItem {
                     VStack {
-                        Image("second")
-                        Text("Second")
+                        Image("fav")
+                        Text("Favoriten")
                     }
                 }
                 .tag(1)
-        }
+            
+            SettingsView()
+                .font(.title)
+                .tabItem{
+                VStack {
+                        Image("settings")
+                        Text("Einstellungen")
+                    }
+                }
+            .tag(2)
+        }.background(Color.white)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+
     }
 }
