@@ -30,6 +30,11 @@ struct SearchView: View {
                 TextField("Domain eingeben", text: $domainname)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 32)).background(Color.white)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color.white, lineWidth:1))
+                
                 Spacer().frame(width: 50, height: 50)
                 Button(action: {
                     if(UserDefaults.standard.bool(forKey: "autoFav")){
@@ -57,24 +62,24 @@ struct SearchView: View {
                     if(self.fetch.results?.DomainInfo.domainAvailability == "UNAVAILABLE"){
                         Group{
                             LottieView(filename: "cross").frame(width: 300, height: 300)
-                            Text("Die Domain \((self.fetch.results?.DomainInfo.domainName.lowercased())!) ist bereits vergeben.")
-                                .font(.system(size: 20))
+                            Text("Die Domain").font(.system(size: 20))
+                            Text("\((self.fetch.results?.DomainInfo.domainName.lowercased())!)").font(.system(size: 30)).bold()
+                            Text("ist bereits vergeben!").font(.system(size: 20))
+                                
                         }
                     }
                     else if(self.fetch.results?.DomainInfo.domainAvailability == "AVAILABLE"){
                         Group{
                             VStack{
                                 LottieView(filename: "check").frame(width: 300, height: 300)
-                                Text("Die Domain \((self.fetch.results?.DomainInfo.domainName)!) ist verfügbar.")
-                                    .font(.system(size: 20))
+                                Text("Die Domain").font(.system(size: 20))
+                                Text("\((self.fetch.results?.DomainInfo.domainName)!)").font(.system(size: 30)).bold()
+                                Text("ist verfügbar!").font(.system(size: 20))
                                     .onAppear{
                                         self.isToggled = true
                                     }
-                                
                             }
-                            
                         }
-                                          
                     }
                     else if(self.fetch.results?.DomainInfo.domainAvailability == "no"){
                         Group{
@@ -84,6 +89,9 @@ struct SearchView: View {
                             }
                         }
                     }
+                
+                    Spacer()
+                           .frame(height: 50)
                             
                     HStack{
                         if(!UserDefaults.standard.bool(forKey: "autoFav")){
@@ -93,6 +101,13 @@ struct SearchView: View {
                             })
                             {
                                 Text("Favorisieren")
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .font(.system(size: 18))
+                                .padding()
+                                .foregroundColor(.black)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.black, lineWidth: 1))
                             }
                             .alert(isPresented: self.$showAlert){
                                 Alert(title: Text("Erfolgreich"), message: Text("Die Domain wurde erfolgreich den Favoriten hinzugefügt"), dismissButton: .default(Text("OK")))
@@ -102,6 +117,13 @@ struct SearchView: View {
                             })
                             {
                                 Text("Schließen")
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                                .font(.system(size: 18))
+                                .padding()
+                                .foregroundColor(.black)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.black, lineWidth: 1))
                             }
                         }
                         else{
@@ -112,6 +134,14 @@ struct SearchView: View {
                                     self.isToggled = false
                                 }){
                                     Text("Schließen")
+                                    .frame(minWidth: 0, maxWidth: .infinity)
+                                    .font(.system(size: 18))
+                                    .padding()
+                                    .foregroundColor(.black)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 25)
+                                        .stroke(Color.black, lineWidth: 1))
+                                    
                                 }
                             }
                             
@@ -132,11 +162,10 @@ struct SearchView: View {
             print(error)
         }
     }
-
-
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
+    
+    struct SearchView_Previews: PreviewProvider {
+        static var previews: some View {
+            SearchView()
+        }
     }
-}
 }
